@@ -24,29 +24,14 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean<>(servlet, "/ws/*", "/ws");
     }
 
-//    @Bean(name = "creditvend")
-//    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema revenueSchema) {
-//        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-//        wsdl11Definition.setPortTypeName("CreditVendPort");
-//        wsdl11Definition.setLocationUri("/ws");
-//        wsdl11Definition.setTargetNamespace("http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema");
-//        wsdl11Definition.setSchema(revenueSchema);
-//        return wsdl11Definition;
-//    }
-//
-//    @Bean
-//    public XsdSchema revenueSchema() {
-//        return new SimpleXsdSchema(new ClassPathResource("xsd/revenue.xsd"));
-//    }
-
     @Bean
     public XsdSchemaCollection schemaCollection() {
-        CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(
+        CommonsXsdSchemaCollection schemaCollection = new CommonsXsdSchemaCollection(
                 new ClassPathResource("xsd/base.xsd"),
                 new ClassPathResource("xsd/revenue.xsd")
         );
-        xsds.setInline(true);
-        return xsds;
+        schemaCollection.setInline(true);
+        return schemaCollection;
     }
 
 
@@ -54,7 +39,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchemaCollection schemaCollection) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("CreditVendPort");
-        wsdl11Definition.setLocationUri("/ws");
+        wsdl11Definition.setLocationUri("/ws/vending");
         wsdl11Definition.setTargetNamespace("http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema");
         wsdl11Definition.setSchemaCollection(schemaCollection);
         return wsdl11Definition;

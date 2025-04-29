@@ -1,6 +1,22 @@
-soap:
-  username: your-username
-  password: your-password
-  vending-uri: http://host/vending
-  reissue-uri: http://host/reissue
-  advice-uri: http://host/advice
+server:
+  port: 8081
+
+hexing:
+  webservice:
+    host: http://localhost
+    port: 8080
+    username: AG501001
+    password: 123456
+    services:
+      vending:
+        uri: ${hexing.webservice.host}:${hexing.webservice.port}/ws/vending
+        connectTimeout: 10000
+        readTimeout: 30000
+  #    reissue:
+  #      uri: http://host/reissue
+  #      connectTimeout: 8000
+  #      readTimeout: 25000
+  #    advice:
+  #      uri: http://host/advice
+  #      connectTimeout: 3000
+  #      readTimeout: 3000

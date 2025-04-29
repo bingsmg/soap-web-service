@@ -160,7 +160,6 @@ public class CreditVendServiceImpl implements CreditVendService {
 
             return response;
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException("处理信用卡充值请求时出错", e);
         }
     }
