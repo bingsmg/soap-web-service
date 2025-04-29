@@ -3,8 +3,6 @@ package com.sboss.hexing.client.controller;
 import com.sboss.hexing.client.dto.request.CreditVendRequest;
 import com.sboss.hexing.client.dto.response.CreditVendResponse;
 import com.sboss.hexing.client.service.VendService;
-import com.sboss.hexing.client.wsdl.CreditVendReq;
-import com.sboss.hexing.client.wsdl.CreditVendResp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

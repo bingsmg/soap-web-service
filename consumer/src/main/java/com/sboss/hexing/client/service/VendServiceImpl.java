@@ -3,10 +3,10 @@ package com.sboss.hexing.client.service;
 import com.sboss.hexing.client.core.ServiceType;
 import com.sboss.hexing.client.core.SoapBaseClient;
 import com.sboss.hexing.client.core.SoapWebServiceTemplateFactory;
+import com.sboss.hexing.client.creditvend.CreditVendResp;
 import com.sboss.hexing.client.dto.request.CreditVendRequest;
 import com.sboss.hexing.client.dto.response.CreditVendResponse;
 import com.sboss.hexing.client.service.mapper.CreditVendMapper;
-import com.sboss.hexing.client.wsdl.CreditVendResp;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

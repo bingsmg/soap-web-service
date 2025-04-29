@@ -7,6 +7,8 @@ hexing:
     port: 8080
     username: AG501001
     password: 123456
+    packages: com.sboss.hexing.client.creditvend,com.sboss.hexing.client.reprint
+
     services:
       vending:
         uri: ${hexing.webservice.host}:${hexing.webservice.port}/ws/vending
