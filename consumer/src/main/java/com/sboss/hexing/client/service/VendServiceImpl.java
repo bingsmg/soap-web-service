@@ -6,8 +6,8 @@ import com.sboss.hexing.client.core.SoapWebServiceTemplateFactory;
 import com.sboss.hexing.client.dto.request.CreditVendRequest;
 import com.sboss.hexing.client.dto.response.CreditVendResponse;
 import com.sboss.hexing.client.service.mapper.CreditVendMapper;
-import com.sboss.hexing.client.wsdl.CreditVendReq;
 import com.sboss.hexing.client.wsdl.CreditVendResp;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,14 +16,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class VendServiceImpl extends SoapBaseClient implements VendService {
 
+    @Resource
+    private CreditVendMapper creditVendMapper;
+
     public VendServiceImpl(SoapWebServiceTemplateFactory factory) {
         super(factory, ServiceType.VENDING);
     }
 
     @Override
     public CreditVendResponse creditVend(CreditVendRequest request) {
-        CreditVendReq req = CreditVendMapper.covert(request);
-        CreditVendResp response = callWebService(req, CreditVendResp.class);
-        return CreditVendMapper.covert(response);
+        CreditVendResp response = callWebService(creditVendMapper.toWsdlRequest(request), CreditVendResp.class);
+        return creditVendMapper.fromWsdlResponse(response);
     }
 }
