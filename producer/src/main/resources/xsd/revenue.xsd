@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema"
+           xmlns:rev="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema"
+           xmlns:base="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" schemaLocation="base.xsd"/>
+
+    <!-- 请求类型 -->
+    <xs:complexType name="VendRequest" abstract="true">
+        <xs:sequence>
+            <xs:element name="clientID" type="base:DeviceID"/>
+            <xs:element name="terminalID" type="base:DeviceID"/>
+            <xs:element name="msgID" type="base:MsgID"/>
+            <xs:element name="authCred" type="base:AuthCred"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CreditVendReq">
+        <xs:complexContent>
+            <xs:extension base="rev:VendRequest">
+                <xs:sequence>
+                    <xs:element name="resource" type="base:Resource"/>
+                    <xs:element name="idMethod" type="base:IDMethod"/>
+                    <xs:element name="purchaseValue" type="rev:PurchaseValue"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PurchaseValue" abstract="true"/>
+
+    <xs:complexType name="PurchaseValueCurrency">
+        <xs:complexContent>
+            <xs:extension base="rev:PurchaseValue">
+                <xs:sequence>
+                    <xs:element name="amt" type="rev:CurrencyValue"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CurrencyValue">
+        <xs:attribute name="value" type="xs:string" use="required"/>
+        <xs:attribute name="symbol" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <!-- 响应类型 -->
+    <xs:complexType name="VendResponse" abstract="true">
+        <xs:sequence>
+            <xs:element name="clientID" type="base:DeviceID"/>
+            <xs:element name="serverID" type="base:DeviceID"/>
+            <xs:element name="terminalID" type="base:DeviceID"/>
+            <xs:element name="reqMsgID" type="base:MsgID"/>
+            <xs:element name="respDateTime" type="xs:string"/>
+            <xs:element name="dispHeader" type="xs:string"/>
+            <xs:element name="clientStatus" type="base:ClientStatus"/>
+            <xs:element name="utility" type="base:Organization"/>
+            <xs:element name="vendor" type="base:Organization"/>
+            <xs:element name="custVendDetail" type="base:CustomerDetails"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CreditVendResp">
+        <xs:complexContent>
+            <xs:extension base="rev:VendResponse">
+                <xs:sequence>
+                    <xs:element name="creditVendReceipt" type="rev:CreditVendReceipt"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CreditVendReceipt">
+        <xs:sequence>
+            <xs:element name="transactions" type="rev:Transactions"/>
+        </xs:sequence>
+        <xs:attribute name="receiptNo" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Transactions">
+        <xs:sequence>
+            <xs:element name="tx" type="rev:Transaction" maxOccurs="unbounded"/>
+            <xs:element name="lessRound" type="base:CurrencyAmount"/>
+            <xs:element name="tenderAmt" type="base:CurrencyAmount"/>
+            <xs:element name="change" type="base:CurrencyAmount"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Transaction" abstract="true"/>
+
+    <xs:complexType name="CreditVendTx">
+        <xs:complexContent>
+            <xs:extension base="rev:Transaction">
+                <xs:sequence>
+                    <xs:element name="amt" type="base:CurrencyAmount"/>
+                    <xs:element name="creditTokenIssue" type="base:TokenIssue"/>
+                    <xs:element name="tariff" type="base:Tariff"/>
+                </xs:sequence>
+                <xs:attribute name="receiptNo" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ServiceChrgTx">
+        <xs:complexContent>
+            <xs:extension base="rev:Transaction">
+                <xs:sequence>
+                    <xs:element name="amt" type="base:CurrencyAmount"/>
+                    <xs:element name="accDesc" type="xs:string"/>
+                    <xs:element name="accNo" type="xs:string"/>
+                    <xs:element name="tariff" type="base:Tariff"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- 元素定义 -->
+    <xs:element name="creditVendReq">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="rev:CreditVendReq"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="creditVendResp">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="rev:CreditVendResp"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

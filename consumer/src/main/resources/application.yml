@@ -1,0 +1,6 @@
+soap:
+  username: your-username
+  password: your-password
+  vending-uri: http://host/vending
+  reissue-uri: http://host/reissue
+  advice-uri: http://host/advice

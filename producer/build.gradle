@@ -1,0 +1,77 @@
+plugins {
+    id 'org.springframework.boot' version '3.3.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+}
+
+group = 'com.sboss.hexing'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    jaxb
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'wsdl4j:wsdl4j'
+    jaxb("org.glassfish.jaxb:jaxb-xjc")
+    // 版本要足够高，气死我
+    implementation 'org.apache.ws.xmlschema:xmlschema-core:2.3.1'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// 简化的JAXB生成任务
+task genJaxb {
+    group = 'code generation'
+    description = "Generate JAXB classes for XSD files"
+
+    def outputDir = "${buildDir}/generated-sources/jaxb"
+    def schemaDir = "${projectDir}/src/main/resources/xsd"
+
+    inputs.dir schemaDir
+    outputs.dir outputDir
+
+    doLast {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+            mkdir(dir: outputDir)
+
+            // 一次性处理所有XSD文件，让XJC自己处理依赖关系
+            xjc(destdir: outputDir) {
+                schema(dir: schemaDir, includes: "**/*.xsd")
+                arg(value: "-extension")
+                arg(value: "-XautoNameResolution")
+                produces(dir: outputDir, includes: "**/*.java")
+            }
+        }
+    }
+}
+
+// 添加生成的源代码到Java编译路径
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            srcDir 'build/generated-sources/jaxb'
+        }
+    }
+}
+
+// 将JAXB生成的源代码添加到编译路径
+compileJava.dependsOn genJaxb

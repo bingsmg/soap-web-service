@@ -1,0 +1,4 @@
+rootProject.name = 'soap-web-service'
+include 'producer'
+include 'consumer'
+

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema"
+           xmlns:base="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema"
+           elementFormDefault="qualified">
+
+    <!-- 基础类型定义 -->
+    <xs:complexType name="MsgID">
+        <xs:sequence>
+            <xs:element name="dateTime" type="xs:string"/>
+            <xs:element name="uniqueNumber" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AuthCred">
+        <xs:sequence>
+            <xs:element name="opName" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DeviceID" abstract="true"/>
+
+    <xs:complexType name="EANDeviceID">
+        <xs:complexContent>
+            <xs:extension base="base:DeviceID">
+                <xs:attribute name="ean" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GenericDeviceID">
+        <xs:complexContent>
+            <xs:extension base="base:DeviceID">
+                <xs:attribute name="id" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Resource" abstract="true"/>
+
+    <xs:complexType name="Electricity">
+        <xs:complexContent>
+            <xs:extension base="base:Resource"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="IDMethod" abstract="true"/>
+
+    <xs:complexType name="VendIDMethod">
+        <xs:complexContent>
+            <xs:extension base="base:IDMethod">
+                <xs:sequence>
+                    <xs:element name="meterIdentifier" type="base:MeterIdentifier"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MeterIdentifier" abstract="true"/>
+
+    <xs:complexType name="MeterNumber">
+        <xs:complexContent>
+            <xs:extension base="base:MeterIdentifier">
+                <xs:attribute name="msno" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ClientStatus">
+        <xs:sequence>
+            <xs:element name="availCredit" type="base:CurrencyAmount"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CurrencyAmount">
+        <xs:attribute name="value" type="xs:string" use="required"/>
+        <xs:attribute name="symbol" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Organization">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="address" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="CustomerDetails">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="address" type="xs:string" use="required"/>
+        <xs:attribute name="accNo" type="xs:string" use="required"/>
+        <xs:attribute name="locRef" type="xs:string" use="required"/>
+        <xs:attribute name="daysLastPurchase" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="DisplayText">
+        <xs:attribute name="text" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="MeterType">
+        <xs:attribute name="at" type="xs:string" use="required"/>
+        <xs:attribute name="tt" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="MeterDetail">
+        <xs:sequence>
+            <xs:element name="meterType" type="base:MeterType"/>
+            <xs:element name="maxVendAmt" type="xs:string"/>
+            <xs:element name="minVendAmt" type="xs:string"/>
+            <xs:element name="maxVendEng" type="xs:string"/>
+            <xs:element name="minVendEng" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="msno" type="xs:string" use="required"/>
+        <xs:attribute name="sgc" type="xs:string" use="required"/>
+        <xs:attribute name="krn" type="xs:string" use="required"/>
+        <xs:attribute name="ti" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Token" abstract="true"/>
+
+    <xs:complexType name="STS1Token">
+        <xs:complexContent>
+            <xs:extension base="base:Token">
+                <xs:sequence>
+                    <xs:element name="stsCipher" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Tariff">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TokenIssue" abstract="true">
+        <xs:sequence>
+            <xs:element name="desc" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SaleCredTokenIssue">
+        <xs:complexContent>
+            <xs:extension base="base:TokenIssue">
+                <xs:sequence>
+                    <xs:element name="meterDetail" type="base:MeterDetail"/>
+                    <xs:element name="token" type="base:Token"/>
+                    <xs:element name="units">
+                        <xs:complexType>
+                            <xs:attribute name="value" type="xs:string" use="required"/>
+                            <xs:attribute name="siUnit" type="xs:string" use="required"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="resource" type="base:Resource"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
