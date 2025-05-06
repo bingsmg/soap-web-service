@@ -1,0 +1,217 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema"
+           xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema"
+           targetNamespace="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema"
+           elementFormDefault="qualified">
+
+    <!-- Request -->
+    <xs:element name="creditVendReq" type="ns3:CreditVendReq"/>
+    <xs:complexType name="CreditVendReq">
+        <xs:sequence>
+            <xs:element name="clientID" type="ns2:ClientID"/>
+            <xs:element name="terminalID" type="ns2:TerminalID"/>
+            <xs:element name="msgID" type="ns2:MsgID"/>
+            <xs:element name="authCred" type="ns2:AuthCred"/>
+            <xs:element name="resource" type="ns2:Resource"/>
+            <xs:element name="idMethod" type="ns2:IdMethod"/>
+            <xs:element name="purchaseValue" type="ns3:PurchaseValue"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ClientID">
+        <xs:attribute name="ean" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="TerminalID">
+        <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="MsgID">
+        <xs:attribute name="dateTime" type="xs:string"/>
+        <xs:attribute name="uniqueNumber" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="AuthCred">
+        <xs:sequence>
+            <xs:element name="opName" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Resource">
+        <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="IdMethod">
+        <xs:sequence>
+            <xs:element name="meterIdentifier" type="ns2:MeterIdentifier"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MeterIdentifier">
+        <xs:attribute name="msno" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="PurchaseValue">
+        <xs:sequence>
+            <xs:element name="amt" type="ns3:Amt"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Amt">
+        <xs:attribute name="value" type="xs:int"/>
+        <xs:attribute name="symbol" type="xs:string"/>
+    </xs:complexType>
+
+    <!-- Response -->
+    <xs:element name="creditVendResp" type="ns3:CreditVendResp"/>
+    <xs:complexType name="CreditVendResp">
+        <xs:sequence>
+            <xs:element name="clientID" type="ns2:ClientID"/>
+            <xs:element name="serverID" type="ns2:ServerID"/>
+            <xs:element name="terminalID" type="ns2:TerminalID"/>
+            <xs:element name="reqMsgID" type="ns2:ReqMsgID"/>
+            <xs:element name="respDateTime" type="xs:string"/>
+            <xs:element name="dispHeader" type="xs:string"/>
+            <xs:element name="clientStatus" type="ns2:ClientStatus"/>
+            <xs:element name="utility" type="ns2:Utility"/>
+            <xs:element name="vendor" type="ns2:Vendor"/>
+            <xs:element name="custVendDetail" type="ns2:CustVendDetail"/>
+            <xs:element name="creditVendReceipt" type="ns3:CreditVendReceipt"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ServerID">
+        <xs:attribute name="ean" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="ReqMsgID">
+        <xs:attribute name="dateTime" type="xs:string"/>
+        <xs:attribute name="uniqueNumber" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="ClientStatus">
+        <xs:sequence>
+            <xs:element name="availCredit" type="ns2:AvailCredit"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AvailCredit">
+        <xs:attribute name="symbol" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="Utility">
+        <xs:attribute name="address" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="Vendor">
+        <xs:attribute name="address" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="CustVendDetail">
+        <xs:attribute name="accNo" type="xs:string"/>
+        <xs:attribute name="address" type="xs:string"/>
+        <xs:attribute name="daysLastPurchase" type="xs:string"/>
+        <xs:attribute name="locRef" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="CreditVendReceipt">
+        <xs:sequence>
+            <xs:element name="transactions" type="ns3:Transactions"/>
+        </xs:sequence>
+        <xs:attribute name="receiptNo" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="Transactions">
+        <xs:sequence>
+            <xs:element name="tx" type="ns3:Tx" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="lessRound" type="ns3:Amount"/>
+            <xs:element name="tenderAmt" type="ns3:Amount"/>
+            <xs:element name="change" type="ns3:Amount"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Amount">
+        <xs:attribute name="symbol" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="Tx" abstract="true">
+        <xs:attribute name="receiptNo" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="CreditVendTx">
+        <xs:complexContent>
+            <xs:extension base="ns3:Tx">
+                <xs:sequence>
+                    <xs:element name="amt" type="ns3:Amount"/>
+                    <xs:element name="creditTokenIssue" type="ns3:CreditTokenIssue"/>
+                    <xs:element name="tariff" type="ns3:Tariff"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ServiceChrgTx">
+        <xs:complexContent>
+            <xs:extension base="ns3:Tx">
+                <xs:sequence>
+                    <xs:element name="amt" type="ns3:Amount"/>
+                    <xs:element name="accDesc" type="xs:string"/>
+                    <xs:element name="accNo" type="xs:string"/>
+                    <xs:element name="tariff" type="ns3:Tariff"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CreditTokenIssue">
+        <xs:sequence>
+            <xs:element name="desc" type="xs:string"/>
+            <xs:element name="meterDetail" type="ns2:MeterDetail"/>
+            <xs:element name="token" type="ns2:Token"/>
+            <xs:element name="units" type="ns2:Units"/>
+            <xs:element name="resource" type="ns2:Resource"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MeterDetail">
+        <xs:sequence>
+            <xs:element name="meterType" type="ns2:MeterType"/>
+            <xs:element name="maxVendAmt" type="xs:string" minOccurs="0"/>
+            <xs:element name="minVendAmt" type="xs:string" minOccurs="0"/>
+            <xs:element name="maxVendEng" type="xs:string" minOccurs="0"/>
+            <xs:element name="minVendEng" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="krn" type="xs:string"/>
+        <xs:attribute name="msno" type="xs:string"/>
+        <xs:attribute name="sgc" type="xs:string"/>
+        <xs:attribute name="ti" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="MeterType">
+        <xs:attribute name="at" type="xs:string"/>
+        <xs:attribute name="tt" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="Token">
+        <xs:sequence>
+            <xs:element name="stsCipher" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Units">
+        <xs:attribute name="siUnit" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="Tariff">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
