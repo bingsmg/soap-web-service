@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.yaml:snakeyaml:2.0' // 支持 YAML 解析
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.0'
@@ -42,19 +51,17 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-def jaxwsBaseDir = layout.buildDirectory.dir("generated/sources/jaxws")
+// =============== YAML 配置加载 ===============
+import org.yaml.snakeyaml.Yaml
 
-// Define all WSDL metadata
-def wsdlDefinitions = [
-        creditVend: [
-                wsdl   : 'http://localhost:8082/ws/creditvend.wsdl',
-                package: 'com.sboss.hexing.client.creditvend'
-        ],
-//        reprint: [
-//                wsdl   : 'http://localhost:8080/ws/reprint.wsdl',
-//                package: 'com.sboss.hexing.client.reprint'
-//        ]
-]
+def wsdlDefinitions = loadWSDLDefinitions()
+
+private def loadWSDLDefinitions() {
+    def file = file("src/main/resources/wsdl-config.yml")
+    def yaml = new Yaml()
+    def data = yaml.load(file.newReader())
+    return data['wsdl-definitions']
+}
 
 // Dynamically register wsimport tasks for each WSDL
 wsdlDefinitions.each { name, spec ->

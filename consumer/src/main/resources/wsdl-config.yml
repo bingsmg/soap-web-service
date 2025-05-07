@@ -1,0 +1,7 @@
+wsdl-definitions:
+  creditVend:
+    wsdl: http://localhost:8082/ws/creditvend.wsdl
+    package: com.sboss.hexing.client.creditvend
+#  reprint:
+#    wsdl: http://localhost:8080/ws/reprint.wsdl
+#    package: com.sboss.hexing.client.reprint
