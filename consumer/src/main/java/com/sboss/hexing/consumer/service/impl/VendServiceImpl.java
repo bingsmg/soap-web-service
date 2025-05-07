@@ -1,19 +1,19 @@
-package com.sboss.hexing.client.service;
+package com.sboss.hexing.consumer.service.impl;
 
-import com.sboss.hexing.client.core.ServiceType;
-import com.sboss.hexing.client.core.SoapBaseClient;
-import com.sboss.hexing.client.core.SoapWebServiceTemplateFactory;
-import com.sboss.hexing.client.creditvend.CreditVendResp;
-import com.sboss.hexing.client.dto.request.CreditVendRequest;
-import com.sboss.hexing.client.dto.response.CreditVendResponse;
-import com.sboss.hexing.client.service.mapper.CreditVendMapper;
+import com.sboss.hexing.consumer.core.ServiceType;
+import com.sboss.hexing.consumer.core.SoapBaseClient;
+import com.sboss.hexing.consumer.core.SoapWebServiceTemplateFactory;
+import com.sboss.hexing.consumer.creditvend.CreditVendResp;
+import com.sboss.hexing.consumer.dto.revenue.CreditVendRequest;
+import com.sboss.hexing.consumer.dto.revenue.CreditVendResponse;
+import com.sboss.hexing.consumer.mapper.CreditVendMapper;
+import com.sboss.hexing.consumer.service.VendService;
 import jakarta.annotation.Resource;
-import org.springframework.stereotype.Service;
 
 /**
  * @author weibb
  */
-@Service
+//@Service
 public class VendServiceImpl extends SoapBaseClient implements VendService {
 
     @Resource

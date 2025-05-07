@@ -1,4 +1,4 @@
-package com.sboss.hexing.client.core;
+package com.sboss.hexing.consumer.client;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

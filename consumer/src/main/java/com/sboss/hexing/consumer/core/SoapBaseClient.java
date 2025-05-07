@@ -1,5 +1,6 @@
-package com.sboss.hexing.client.core;
+package com.sboss.hexing.consumer.core;
 
+import com.sboss.hexing.consumer.client.SoapClientExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 import org.springframework.ws.client.core.WebServiceMessageCallback;

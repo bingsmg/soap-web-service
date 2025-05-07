@@ -1,6 +1,6 @@
-package com.sboss.hexing.client.core;
+package com.sboss.hexing.consumer.core;
 
-import com.sboss.hexing.client.config.SoapServiceProperties;
+import com.sboss.hexing.consumer.config.HexingServiceProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.auth.AuthScope;
@@ -11,7 +11,6 @@ import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.util.Timeout;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.transport.http.HttpComponents5MessageSender;
@@ -22,12 +21,12 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author weibb
  */
-@Component
+//@Component
 @RequiredArgsConstructor
 public class SoapWebServiceTemplateFactory {
 
     private final Jaxb2Marshaller marshaller;
-    private final SoapServiceProperties properties;
+    private final HexingServiceProperties properties;
 
     // Cache templates keyed by service key
     private final Map<String, WebServiceTemplate> templateCache = new ConcurrentHashMap<>();
@@ -49,7 +48,7 @@ public class SoapWebServiceTemplateFactory {
     public WebServiceTemplate create(ServiceType serviceType) {
         String key = serviceType.getKey();
         return templateCache.computeIfAbsent(key, k -> {
-            SoapServiceProperties.ServiceConfig config = properties.getServices().get(k);
+            HexingServiceProperties.ServiceConfig config = properties.getServices().get(k);
             if (config == null) {
                 throw new IllegalArgumentException("No config found for service: " + serviceType);
             }
@@ -57,7 +56,7 @@ public class SoapWebServiceTemplateFactory {
         });
     }
 
-    private WebServiceTemplate buildTemplate(SoapServiceProperties.ServiceConfig config) {
+    private WebServiceTemplate buildTemplate(HexingServiceProperties.ServiceConfig config) {
         WebServiceTemplate template = new WebServiceTemplate(marshaller);
         template.setMarshaller(marshaller);
         template.setUnmarshaller(marshaller);
@@ -66,7 +65,7 @@ public class SoapWebServiceTemplateFactory {
         return template;
     }
 
-    private HttpClient createHttpClient(SoapServiceProperties.ServiceConfig config) {
+    private HttpClient createHttpClient(HexingServiceProperties.ServiceConfig config) {
         var requestConfig = RequestConfig.custom()
                 .setConnectionRequestTimeout(Timeout.ofMilliseconds(config.getConnectTimeout()))
                 .setResponseTimeout(Timeout.ofMilliseconds(config.getReadTimeout()))

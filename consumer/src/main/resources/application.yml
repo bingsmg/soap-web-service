@@ -2,23 +2,28 @@ server:
   port: 8081
 
 hexing:
-  webservice:
+  vend:
+    protocol: http
+    uri: http://localhost:8082/ws/vending
     host: http://localhost
-    port: 8080
+    port: 8082
     username: AG501001
     password: 123456
-    packages: com.sboss.hexing.client.creditvend,com.sboss.hexing.client.reprint
+    scanPackages: com.sboss.hexing.client.creditvend,com.sboss.hexing.client.reprint
+    connectTimeout: 10000
+    readTimeout: 30000
+    maxConnections: 5
 
     services:
       vending:
         uri: ${hexing.webservice.host}:${hexing.webservice.port}/ws/vending
         connectTimeout: 10000
         readTimeout: 30000
-  #    reissue:
-  #      uri: http://host/reissue
-  #      connectTimeout: 8000
-  #      readTimeout: 25000
-  #    advice:
-  #      uri: http://host/advice
-  #      connectTimeout: 3000
-  #      readTimeout: 3000
+      reissue:
+        uri: http://host/reissue
+        connectTimeout: 8000
+        readTimeout: 25000
+      advice:
+        uri: http://host/advice
+        connectTimeout: 3000
+        readTimeout: 3000

@@ -1,4 +1,4 @@
-package com.sboss.hexing.client.config;
+package com.sboss.hexing.consumer.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,13 +11,18 @@ import java.util.Map;
  */
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "hexing.webservice")
-public class SoapServiceProperties {
-
+@ConfigurationProperties(prefix = "hexing.vend")
+public class HexingServiceProperties {
+    private String protocol;
+    private String uri;
     private String host;
     private int port;
     private String username;
     private String password;
+    private String scanPackages;
+    private int connectTimeout;
+    private int readTimeout;
+    private int maxConnections;
 
     /**
      * 子服务配置

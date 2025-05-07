@@ -1,11 +1,9 @@
-package com.sboss.hexing.client.config;
+package com.sboss.hexing.consumer.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
-import org.springframework.ws.client.core.WebServiceTemplate;
-import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +11,7 @@ import java.util.Map;
 /**
  * @author weibb
  */
-@Configuration
+//@Configuration
 public class SoapClientConfig {
 
     @Value("${hexing.webservice.packages}")

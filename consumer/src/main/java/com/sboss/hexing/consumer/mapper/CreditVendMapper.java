@@ -1,9 +1,9 @@
-package com.sboss.hexing.client.service.mapper;
+package com.sboss.hexing.consumer.mapper;
 
-import com.sboss.hexing.client.creditvend.CreditVendReq;
-import com.sboss.hexing.client.creditvend.CreditVendResp;
-import com.sboss.hexing.client.dto.request.CreditVendRequest;
-import com.sboss.hexing.client.dto.response.CreditVendResponse;
+import com.sboss.hexing.consumer.creditvend.CreditVendReq;
+import com.sboss.hexing.consumer.creditvend.CreditVendResp;
+import com.sboss.hexing.consumer.dto.revenue.CreditVendRequest;
+import com.sboss.hexing.consumer.dto.revenue.CreditVendResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
