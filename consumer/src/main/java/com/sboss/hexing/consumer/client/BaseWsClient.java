@@ -2,28 +2,23 @@ package com.sboss.hexing.consumer.client;
 
 import com.sboss.hexing.consumer.config.HexingServiceProperties;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.auth.AuthScope;
-import org.apache.hc.client5.http.auth.CredentialsProvider;
 import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
 import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
-import org.apache.hc.core5.util.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
+import org.springframework.ws.soap.client.core.SoapActionCallback;
 import org.springframework.ws.transport.http.HttpComponents5MessageSender;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -101,8 +96,8 @@ public abstract class BaseWsClient extends WebServiceGatewaySupport {
         // null
     }
 
-    protected <T> T callService(Object request, Class<T> responseType) {
-        return callService(request, responseType, null);
+    protected <T> T callService(Object request, Class<T> responseType, String soapAction) {
+        return callService(request, responseType, new SoapActionCallback(soapAction));
     }
 
     protected <T> T callService(Object request, Class<T> responseType,  WebServiceMessageCallback callback) {
