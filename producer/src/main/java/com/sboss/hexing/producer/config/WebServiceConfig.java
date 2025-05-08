@@ -1,4 +1,4 @@
-package com.sboss.hexing.server.config;
+package com.sboss.hexing.producer.config;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;

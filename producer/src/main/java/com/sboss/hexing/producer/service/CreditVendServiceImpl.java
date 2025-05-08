@@ -1,4 +1,4 @@
-package com.sboss.hexing.server.service;
+package com.sboss.hexing.producer.service;
 
 import org.springframework.stereotype.Service;
 import za.co.eskom.nrs.xmlvend.base._2_1.schema.*;

@@ -1,6 +1,6 @@
-package com.sboss.hexing.server;
+package com.sboss.hexing.producer;
 
-import com.sboss.hexing.server.service.CreditVendService;
+import com.sboss.hexing.producer.service.CreditVendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;

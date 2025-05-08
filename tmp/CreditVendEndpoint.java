@@ -1,7 +1,7 @@
-package com.sboss.hexing.server.endpoint;
+package com.sboss.hexing.producer.endpoint;
 
-import com.sboss.hexing.server.domain.CreditVendReq;
-import com.sboss.hexing.server.domain.CreditVendResp;
+import com.sboss.hexing.producer.domain.CreditVendReq;
+import com.sboss.hexing.producer.domain.CreditVendResp;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;

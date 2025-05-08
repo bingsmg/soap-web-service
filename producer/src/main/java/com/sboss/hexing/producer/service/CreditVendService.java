@@ -1,4 +1,4 @@
-package com.sboss.hexing.server.service;
+package com.sboss.hexing.producer.service;
 
 import za.co.eskom.nrs.xmlvend.revenue._2_1.schema.CreditVendReq;
 import za.co.eskom.nrs.xmlvend.revenue._2_1.schema.CreditVendResp;

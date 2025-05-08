@@ -1,4 +1,4 @@
-package com.sboss.hexing.server.domain;
+package com.sboss.hexing.producer.domain;
 
 import jakarta.xml.bind.annotation.*;
 import lombok.Getter;

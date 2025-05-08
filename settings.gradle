@@ -1,4 +1,4 @@
-rootProject.name = 'soap-web-service'
+rootProject.name = 'yub-ws'
 include 'producer'
 include 'consumer'
 

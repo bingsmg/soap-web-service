@@ -1,4 +1,4 @@
-package com.sboss.hexing.server;
+package com.sboss.hexing.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
